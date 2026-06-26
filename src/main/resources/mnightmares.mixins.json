@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "mnightmares.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mnightmares.refmap.json",
+  "mixins": [
+    "ServerLevelMixin"
+  ],
+  "client": [
+    "ChatComponentMixin",
+    "InGameHudMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

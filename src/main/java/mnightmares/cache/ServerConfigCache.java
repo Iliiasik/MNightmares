@@ -1,0 +1,23 @@
+package mnightmares.cache;
+
+import mnightmares.network.packet.SyncConfigPacket;
+
+public class ServerConfigCache {
+    private static SyncConfigPacket cached = null;
+
+    public static void apply(SyncConfigPacket packet) {
+        cached = packet;
+    }
+
+    public static boolean has() {
+        return cached != null;
+    }
+
+    public static SyncConfigPacket get() {
+        return cached;
+    }
+
+    public static void clear() {
+        cached = null;
+    }
+}
