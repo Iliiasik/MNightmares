@@ -9,7 +9,8 @@
   ],
   "client": [
     "ChatComponentMixin",
-    "InGameHudMixin"
+    "InGameHudMixin",
+    "ForgeGuiMixin"
   ],
   "injectors": {
     "defaultRequire": 1

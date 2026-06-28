@@ -1,6 +1,7 @@
 package mnightmares.client.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mnightmares.MidnightNightmares;
 import mnightmares.config.NightmaresConfig;
 import mnightmares.client.manager.SleepStateManager;
@@ -8,7 +9,8 @@ import mnightmares.client.model.Slide;
 import mnightmares.client.service.SlideService;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class SleepOverlayRenderer {
 
     private static final float BASE_W = 1920.0f;
     private static final float BASE_H = 1080.0f;
-    private static final int VIRTUAL_EYE_SIZE = 220;
+    private static final int VIRTUAL_EYE_SIZE = 300;
     private static final int VIRTUAL_GAP = 48;
     private static final int VIRTUAL_TEXT_WIDTH = 780;
     private static final float VIRTUAL_TEXT_SCALE = 2.6f;
@@ -156,27 +158,38 @@ public class SleepOverlayRenderer {
         return sleepStateManager.isSleeping() && isOverlayVisible && overlayAlpha > 0f;
     }
 
-    public void renderBloodOverlay(GuiGraphics context, int screenWidth, int screenHeight) {
+    public void renderBloodOverlay(PoseStack poseStack, int screenWidth, int screenHeight) {
         if (!isActive()) return;
         float strength = config.getOverlayOpacity() * overlayAlpha;
         float pulse = 0.85f + 0.15f * (float) Math.sin(System.currentTimeMillis() / 700.0);
         strength *= pulse;
 
         int baseAlpha = clampAlpha(strength * 0.45f);
-        context.fill(0, 0, screenWidth, screenHeight, (baseAlpha << 24) | BLOOD_RGB);
+        GuiComponent.fill(poseStack, 0, 0, screenWidth, screenHeight, (baseAlpha << 24) | BLOOD_RGB);
 
         int edgeAlpha = clampAlpha(strength);
-        int transparent = BLOOD_RGB;
         int bandH = Math.round(screenHeight * 0.36f);
         int bandW = Math.round(screenWidth * 0.26f);
 
-        context.fillGradient(0, 0, screenWidth, bandH, (edgeAlpha << 24) | BLOOD_RGB, transparent);
-        context.fillGradient(0, screenHeight - bandH, screenWidth, screenHeight, transparent, (edgeAlpha << 24) | BLOOD_RGB);
-        fillHorizontalGradient(context, 0, bandW, screenHeight, edgeAlpha, 0);
-        fillHorizontalGradient(context, screenWidth - bandW, screenWidth, screenHeight, 0, edgeAlpha);
+        fillVerticalGradient(poseStack, 0, screenWidth, bandH, edgeAlpha, 0);
+        fillVerticalGradient(poseStack, screenHeight - bandH, screenWidth, screenHeight, 0, edgeAlpha);
+        fillHorizontalGradient(poseStack, 0, bandW, screenHeight, edgeAlpha, 0);
+        fillHorizontalGradient(poseStack, screenWidth - bandW, screenWidth, screenHeight, 0, edgeAlpha);
     }
 
-    private void fillHorizontalGradient(GuiGraphics context, int x1, int x2, int y2, int alphaLeft, int alphaRight) {
+    private void fillVerticalGradient(PoseStack poseStack, int y1, int x2, int y2, int alphaTop, int alphaBottom) {
+        int step = 3;
+        int height = y2 - y1;
+        if (height <= 0) return;
+        for (int y = y1; y < y2; y += step) {
+            float t = (float) (y - y1) / height;
+            int a = Math.round(alphaTop + (alphaBottom - alphaTop) * t);
+            int ye = Math.min(y + step, y2);
+            GuiComponent.fill(poseStack, 0, y, x2, ye, (a << 24) | BLOOD_RGB);
+        }
+    }
+
+    private void fillHorizontalGradient(PoseStack poseStack, int x1, int x2, int y2, int alphaLeft, int alphaRight) {
         int step = 3;
         int width = x2 - x1;
         if (width <= 0) return;
@@ -184,7 +197,7 @@ public class SleepOverlayRenderer {
             float t = (float) (x - x1) / width;
             int a = Math.round(alphaLeft + (alphaRight - alphaLeft) * t);
             int xe = Math.min(x + step, x2);
-            context.fill(x, 0, xe, y2, (a << 24) | BLOOD_RGB);
+            GuiComponent.fill(poseStack, x, 0, xe, y2, (a << 24) | BLOOD_RGB);
         }
     }
 
@@ -194,7 +207,7 @@ public class SleepOverlayRenderer {
         return Math.min(v, 255);
     }
 
-    public void renderContent(GuiGraphics context, int screenWidth, int screenHeight) {
+    public void renderContent(PoseStack poseStack, int screenWidth, int screenHeight) {
         if (!isActive()) return;
         Minecraft mc = Minecraft.getInstance();
         Font font = mc.font;
@@ -219,16 +232,16 @@ public class SleepOverlayRenderer {
 
         if (config.isEnableImage()) {
             int eyeX = centerX - eyeSize / 2;
-            renderEye(context, eyeX, topY, eyeSize);
+            renderEye(poseStack, eyeX, topY, eyeSize);
         }
 
         if (currentSlide != null && textAlpha > 0.01f && !lines.isEmpty()) {
             int textTop = topY + eyeSize + gap;
-            renderText(context, font, lines, centerX, textTop, textScale, lineHeight);
+            renderText(poseStack, font, lines, centerX, textTop, textScale, lineHeight);
         }
     }
 
-    private void renderEye(GuiGraphics context, int x, int y, int size) {
+    private void renderEye(PoseStack poseStack, int x, int y, int size) {
         int speed = Math.max(1, config.getEyeAnimationSpeedMs());
         int frame = (int) ((System.currentTimeMillis() / speed) % EYE_FRAME_COUNT);
         float vOffset = frame * EYE_FRAME_SIZE;
@@ -240,28 +253,30 @@ public class SleepOverlayRenderer {
         int drawX = x - offset;
         int drawY = y - offset;
 
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, EYE_TEXTURE);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, alpha);
-        context.blit(EYE_TEXTURE, drawX, drawY, pulsedSize, pulsedSize, 0.0f, vOffset, EYE_FRAME_SIZE, EYE_FRAME_SIZE, EYE_FRAME_SIZE, EYE_TEXTURE_HEIGHT);
+        GuiComponent.blit(poseStack, drawX, drawY, pulsedSize, pulsedSize, 0.0f, vOffset, EYE_FRAME_SIZE, EYE_FRAME_SIZE, EYE_FRAME_SIZE, EYE_TEXTURE_HEIGHT);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.disableBlend();
     }
 
-    private void renderText(GuiGraphics context, Font font, List<String> lines, int centerX, int top, float scale, int lineHeight) {
+    private void renderText(PoseStack poseStack, Font font, List<String> lines, int centerX, int top, float scale, int lineHeight) {
         int alpha = clampAlpha(config.getTextOpacity() * textAlpha);
         if (alpha <= 0) return;
         int textColor = (alpha << 24) | 0xFFFFFF;
 
-        context.pose().pushPose();
-        context.pose().translate(centerX, top, 0);
-        context.pose().scale(scale, scale, 1.0f);
+        poseStack.pushPose();
+        poseStack.translate(centerX, top, 0);
+        poseStack.scale(scale, scale, 1.0f);
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             int lineWidth = font.width(line);
-            context.drawString(font, line, -lineWidth / 2, i * lineHeight, textColor, true);
+            font.drawShadow(poseStack, line, -lineWidth / 2.0f, i * lineHeight, textColor);
         }
-        context.pose().popPose();
+        poseStack.popPose();
     }
 
     private List<String> wrapText(String text, Font font, int maxWidth) {

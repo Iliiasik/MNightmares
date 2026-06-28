@@ -8,12 +8,10 @@ import mnightmares.client.repository.SlideRepository;
 import mnightmares.client.service.SlideService;
 import mnightmares.client.service.UserContentLoader;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -95,24 +93,6 @@ public class MidnightNightmaresClient {
             if (inst == null) return;
             inst.sleepStateManager.tick(client.player);
             inst.overlayRenderer.tick();
-        }
-
-        @SubscribeEvent
-        public void onRenderGui(RenderGuiEvent.Post event) {
-            MidnightNightmaresClient inst = getInstance();
-            if (inst == null) return;
-            Minecraft mc = Minecraft.getInstance();
-            if (mc.player == null) return;
-            int w = mc.getWindow().getGuiScaledWidth();
-            int h = mc.getWindow().getGuiScaledHeight();
-            SleepOverlayRenderer r = inst.overlayRenderer;
-            GuiGraphics g = event.getGuiGraphics();
-            if (r.isActive()) {
-                r.renderBloodOverlay(g, w, h);
-                g.flush();
-                r.renderContent(g, w, h);
-                g.flush();
-            }
         }
 
         @SubscribeEvent

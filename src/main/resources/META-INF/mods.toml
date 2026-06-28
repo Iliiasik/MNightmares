@@ -8,8 +8,7 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 authors = "${mod_authors}"
 description = '''${mod_description}'''
-logoFile = "assets/mnightmares/icon.png"
-
+logoFile = "icon.png"
 
 [[dependencies."${mod_id}"]]
 modId = "forge"

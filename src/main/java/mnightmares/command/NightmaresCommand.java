@@ -36,8 +36,7 @@ public class NightmaresCommand {
             count++;
         }
 
-        final int synced = count;
-        source.sendSuccess(() -> Component.literal("Midnight Nightmares reloaded. Synced to " + synced + " player(s)."), true);
-        return synced;
+        source.sendSuccess(Component.literal("Midnight Nightmares reloaded. Synced to " + count + " player(s)."), true);
+        return count;
     }
 }
