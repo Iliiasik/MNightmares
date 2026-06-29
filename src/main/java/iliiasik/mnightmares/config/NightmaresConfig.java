@@ -69,7 +69,6 @@ public final class NightmaresConfig {
         return getConfigDir().resolve("mnightmares.json");
     }
 
-    public SleepOverlaySettings getSleepOverlay() { return sleepOverlay; }
     public ServerSettings getServer() { return server; }
 
     public SyncConfigPayload toSyncPayload() {

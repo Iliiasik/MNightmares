@@ -45,7 +45,7 @@ public class SlideService {
             current += slide.rarity();
             if (random <= current) return slide;
         }
-        return pool.get(pool.size() - 1);
+        return pool.getLast();
     }
 
     public String getCurrentLanguage() {

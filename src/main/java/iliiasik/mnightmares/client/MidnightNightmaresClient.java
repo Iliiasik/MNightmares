@@ -30,7 +30,6 @@ public class MidnightNightmaresClient {
     private SlideRepository slideRepository;
     private SleepStateManager sleepStateManager;
     private SleepOverlayRenderer overlayRenderer;
-    private UserContentLoader userContentLoader;
 
     public static void init(IEventBus modEventBus) {
         if (instance == null) {
@@ -48,7 +47,7 @@ public class MidnightNightmaresClient {
     private void initializeComponents() {
         NightmaresConfig config = NightmaresConfig.getInstance();
         slideRepository = new SlideRepository();
-        userContentLoader = new UserContentLoader();
+        UserContentLoader userContentLoader = new UserContentLoader();
         Minecraft mc = Minecraft.getInstance();
         slideRepository.loadAll(mc.getResourceManager());
         SlideService slideService = new SlideService(slideRepository, config, userContentLoader);
