@@ -9,6 +9,7 @@
   "option.mnightmares.enable_image": "Gözü göster",
   "option.mnightmares.hide_chat_when_sleeping": "Uyurken sohbeti gizle",
   "option.mnightmares.user_content_replaces": "Kendi kâbusların yerleşikleri değiştirir",
+  "option.mnightmares.hide_hud_messages": "Uyurken HUD mesajlarını gizle",
   "option.mnightmares.min_slide_time": "En kısa slayt süresi",
   "option.mnightmares.max_slide_time": "En uzun slayt süresi",
   "option.mnightmares.fade_in": "Slayt beliriş süresi",
@@ -20,9 +21,11 @@
   "option.mnightmares.text_scale": "Metin boyutu",
   "option.mnightmares.image_scale": "Göz boyutu",
   "option.mnightmares.reset_phantom_timer": "Uyumayanlar için hayalet sayacını sıfırla",
+  "option.mnightmares.suppress_vanilla_messages": "Orijinal uyku mesajlarını gizle",
   "option.mnightmares.enable_image.tooltip": "Metnin üstünde izleyen gözü gösterir.",
   "option.mnightmares.hide_chat_when_sleeping.tooltip": "Katman görünürken sohbet penceresini gizler.",
   "option.mnightmares.user_content_replaces.tooltip": "Açık: yalnızca senin kâbusların gösterilir. Kapalı: yerleşik olanlarla karıştırılır.",
+  "option.mnightmares.hide_hud_messages.tooltip": "Katman görünürken hızlı erişim çubuğunun üstündeki mesajları gizler.",
   "option.mnightmares.min_slide_time.tooltip": "Bir slaydın ekranda kalabileceği en kısa süre.",
   "option.mnightmares.max_slide_time.tooltip": "Bir slaydın en uzun süresi. Her slayt bu aralıktan rastgele bir değer seçer.",
   "option.mnightmares.fade_in.tooltip": "Yeni bir slaydın belirmesi ne kadar sürer.",
@@ -33,5 +36,6 @@
   "option.mnightmares.eye_animation_speed.tooltip": "Göz animasyonunun her karesinin ekranda kalma süresi. Düşük değerler gözü hızlandırır.",
   "option.mnightmares.text_scale.tooltip": "Slayt metninin boyutunu değiştirir. Uzun metinler daha fazla satıra bölünür.",
   "option.mnightmares.image_scale.tooltip": "Gözün boyutunu değiştirir. Altındaki metin de onunla kayar.",
-  "option.mnightmares.reset_phantom_timer.tooltip": "Gece atlandığında, uyanık kalanlar da artık hayalet çekmez."
+  "option.mnightmares.reset_phantom_timer.tooltip": "Gece atlandığında, uyanık kalanlar da artık hayalet çekmez.",
+  "option.mnightmares.suppress_vanilla_messages.tooltip": "Yerleşik \"oyuncular uyuyor\" ve \"gece atlanıyor\" mesajlarını gizler."
 }

@@ -9,6 +9,7 @@
   "option.mnightmares.enable_image": "Pokazuj oko",
   "option.mnightmares.hide_chat_when_sleeping": "Ukryj czat podczas snu",
   "option.mnightmares.user_content_replaces": "Własne koszmary zastępują wbudowane",
+  "option.mnightmares.hide_hud_messages": "Ukryj komunikaty HUD podczas snu",
   "option.mnightmares.min_slide_time": "Najkrótszy czas slajdu",
   "option.mnightmares.max_slide_time": "Najdłuższy czas slajdu",
   "option.mnightmares.fade_in": "Pojawianie slajdu",
@@ -20,9 +21,11 @@
   "option.mnightmares.text_scale": "Rozmiar tekstu",
   "option.mnightmares.image_scale": "Rozmiar oka",
   "option.mnightmares.reset_phantom_timer": "Zeruj licznik fantomów tym, którzy nie spali",
+  "option.mnightmares.suppress_vanilla_messages": "Ukryj oryginalne komunikaty o śnie",
   "option.mnightmares.enable_image.tooltip": "Pokazuje obserwujące oko nad tekstem.",
   "option.mnightmares.hide_chat_when_sleeping.tooltip": "Chowa okno czatu, gdy widoczna jest nakładka.",
   "option.mnightmares.user_content_replaces.tooltip": "Włączone: widać tylko twoje koszmary. Wyłączone: mieszają się z wbudowanymi.",
+  "option.mnightmares.hide_hud_messages.tooltip": "Ukrywa komunikaty nad paskiem szybkiego wyboru, gdy widać nakładkę.",
   "option.mnightmares.min_slide_time.tooltip": "Najkrótszy czas wyświetlania jednego slajdu.",
   "option.mnightmares.max_slide_time.tooltip": "Najdłuższy czas slajdu. Każdy losuje wartość z tego przedziału.",
   "option.mnightmares.fade_in.tooltip": "Jak długo pojawia się nowy slajd.",
@@ -33,5 +36,6 @@
   "option.mnightmares.eye_animation_speed.tooltip": "Jak długo widać każdą klatkę animacji oka. Niższe wartości przyspieszają oko.",
   "option.mnightmares.text_scale.tooltip": "Zmienia rozmiar tekstu slajdu. Dłuższe teksty zajmą więcej linii.",
   "option.mnightmares.image_scale.tooltip": "Zmienia rozmiar oka. Tekst pod nim przesuwa się razem z nim.",
-  "option.mnightmares.reset_phantom_timer.tooltip": "Gdy noc zostaje przespana, osoby, które nie spały, też przestają wabić fantomy."
+  "option.mnightmares.reset_phantom_timer.tooltip": "Gdy noc zostaje przespana, osoby, które nie spały, też przestają wabić fantomy.",
+  "option.mnightmares.suppress_vanilla_messages.tooltip": "Ukrywa wbudowane komunikaty „gracze śpią” i „pomijanie nocy”."
 }

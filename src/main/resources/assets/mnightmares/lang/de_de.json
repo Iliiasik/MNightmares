@@ -9,6 +9,7 @@
   "option.mnightmares.enable_image": "Auge anzeigen",
   "option.mnightmares.hide_chat_when_sleeping": "Chat im Schlaf ausblenden",
   "option.mnightmares.user_content_replaces": "Eigene Albträume ersetzen die eingebauten",
+  "option.mnightmares.hide_hud_messages": "HUD-Meldungen im Schlaf ausblenden",
   "option.mnightmares.min_slide_time": "Kürzeste Anzeigedauer",
   "option.mnightmares.max_slide_time": "Längste Anzeigedauer",
   "option.mnightmares.fade_in": "Einblenddauer",
@@ -20,9 +21,11 @@
   "option.mnightmares.text_scale": "Textgröße",
   "option.mnightmares.image_scale": "Augengröße",
   "option.mnightmares.reset_phantom_timer": "Phantom-Zeit auch für Wachgebliebene zurücksetzen",
+  "option.mnightmares.suppress_vanilla_messages": "Vanilla-Schlafmeldungen ausblenden",
   "option.mnightmares.enable_image.tooltip": "Zeigt das beobachtende Auge über dem Text.",
   "option.mnightmares.hide_chat_when_sleeping.tooltip": "Blendet das Chatfenster aus, solange das Overlay zu sehen ist.",
   "option.mnightmares.user_content_replaces.tooltip": "An: Nur deine eigenen Albträume werden gezeigt. Aus: Sie werden mit den eingebauten gemischt.",
+  "option.mnightmares.hide_hud_messages.tooltip": "Blendet Nachrichten über der Schnellleiste aus, solange das Overlay zu sehen ist.",
   "option.mnightmares.min_slide_time.tooltip": "Die kürzeste Zeit, die eine Folie zu sehen ist.",
   "option.mnightmares.max_slide_time.tooltip": "Die längste Zeit einer Folie. Jede Folie wählt einen Zufallswert dazwischen.",
   "option.mnightmares.fade_in.tooltip": "Wie lange eine neue Folie zum Erscheinen braucht.",
@@ -33,5 +36,6 @@
   "option.mnightmares.eye_animation_speed.tooltip": "Wie lange jedes Bild der Augenanimation zu sehen ist. Kleinere Werte bewegen das Auge schneller.",
   "option.mnightmares.text_scale.tooltip": "Skaliert den Folientext. Längere Texte werden auf mehr Zeilen umbrochen.",
   "option.mnightmares.image_scale.tooltip": "Skaliert das Auge. Der Text darunter rückt mit.",
-  "option.mnightmares.reset_phantom_timer.tooltip": "Wird die Nacht übersprungen, locken auch Wachgebliebene keine Phantome mehr an."
+  "option.mnightmares.reset_phantom_timer.tooltip": "Wird die Nacht übersprungen, locken auch Wachgebliebene keine Phantome mehr an.",
+  "option.mnightmares.suppress_vanilla_messages.tooltip": "Blendet die eingebauten Meldungen „Spieler schlafen“ und „Nacht wird übersprungen“ aus."
 }

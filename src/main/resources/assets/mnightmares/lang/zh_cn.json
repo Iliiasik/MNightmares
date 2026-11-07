@@ -9,6 +9,7 @@
   "option.mnightmares.enable_image": "显示眼睛",
   "option.mnightmares.hide_chat_when_sleeping": "睡觉时隐藏聊天",
   "option.mnightmares.user_content_replaces": "自定义噩梦替换内置噩梦",
+  "option.mnightmares.hide_hud_messages": "睡觉时隐藏 HUD 消息",
   "option.mnightmares.min_slide_time": "幻灯片最短时间",
   "option.mnightmares.max_slide_time": "幻灯片最长时间",
   "option.mnightmares.fade_in": "幻灯片淡入",
@@ -20,9 +21,11 @@
   "option.mnightmares.text_scale": "文字大小",
   "option.mnightmares.image_scale": "眼睛大小",
   "option.mnightmares.reset_phantom_timer": "为未睡觉的玩家重置幻翼计时",
+  "option.mnightmares.suppress_vanilla_messages": "隐藏原版睡眠提示",
   "option.mnightmares.enable_image.tooltip": "在文字上方显示注视的眼睛。",
   "option.mnightmares.hide_chat_when_sleeping.tooltip": "显示覆盖层时隐藏聊天窗口。",
   "option.mnightmares.user_content_replaces.tooltip": "开启时只显示你自己的噩梦。关闭时会与内置噩梦混合。",
+  "option.mnightmares.hide_hud_messages.tooltip": "叠加层显示期间，隐藏快捷栏上方的消息。",
   "option.mnightmares.min_slide_time.tooltip": "单张幻灯片停留的最短时间。",
   "option.mnightmares.max_slide_time.tooltip": "单张幻灯片停留的最长时间，每张会在区间内随机取值。",
   "option.mnightmares.fade_in.tooltip": "新幻灯片出现所需的时间。",
@@ -33,5 +36,6 @@
   "option.mnightmares.eye_animation_speed.tooltip": "眼睛动画每一帧停留的时间。数值越小，眼睛动得越快。",
   "option.mnightmares.text_scale.tooltip": "调整幻灯片文字的大小。较长的文字会换成更多行。",
   "option.mnightmares.image_scale.tooltip": "调整眼睛的大小。下方的文字会随之移动。",
-  "option.mnightmares.reset_phantom_timer.tooltip": "跳过夜晚后，熬夜的玩家也不再吸引幻翼。"
+  "option.mnightmares.reset_phantom_timer.tooltip": "跳过夜晚后，熬夜的玩家也不再吸引幻翼。",
+  "option.mnightmares.suppress_vanilla_messages.tooltip": "隐藏内置的“玩家正在睡觉”和“正在跳过夜晚”消息。"
 }

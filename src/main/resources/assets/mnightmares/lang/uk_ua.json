@@ -9,6 +9,7 @@
   "option.mnightmares.enable_image": "Показувати око",
   "option.mnightmares.hide_chat_when_sleeping": "Ховати чат під час сну",
   "option.mnightmares.user_content_replaces": "Власні кошмари замість вбудованих",
+  "option.mnightmares.hide_hud_messages": "Ховати повідомлення HUD під час сну",
   "option.mnightmares.min_slide_time": "Мінімум на слайд",
   "option.mnightmares.max_slide_time": "Максимум на слайд",
   "option.mnightmares.fade_in": "Поява слайда",
@@ -20,9 +21,11 @@
   "option.mnightmares.text_scale": "Розмір тексту",
   "option.mnightmares.image_scale": "Розмір ока",
   "option.mnightmares.reset_phantom_timer": "Скидати таймер фантомів тим, хто не спав",
+  "option.mnightmares.suppress_vanilla_messages": "Ховати ванільні повідомлення про сон",
   "option.mnightmares.enable_image.tooltip": "Показує око, що стежить, над текстом.",
   "option.mnightmares.hide_chat_when_sleeping.tooltip": "Прибирає вікно чату, поки показано оверлей.",
   "option.mnightmares.user_content_replaces.tooltip": "Увімкнено: показуються лише ваші кошмари. Вимкнено: вони змішуються з вбудованими.",
+  "option.mnightmares.hide_hud_messages.tooltip": "Приховує повідомлення над хотбаром, поки показано оверлей.",
   "option.mnightmares.min_slide_time.tooltip": "Скільки щонайменше тримається один слайд.",
   "option.mnightmares.max_slide_time.tooltip": "Скільки щонайбільше тримається один слайд. Для кожного береться випадкове значення в цьому діапазоні.",
   "option.mnightmares.fade_in.tooltip": "Скільки триває поява нового слайда.",
@@ -33,5 +36,6 @@
   "option.mnightmares.eye_animation_speed.tooltip": "Скільки триває кожен кадр анімації ока. Що менше значення, то швидше рухається око.",
   "option.mnightmares.text_scale.tooltip": "Змінює розмір тексту слайда. Довгий текст переноситься на більше рядків.",
   "option.mnightmares.image_scale.tooltip": "Змінює розмір ока. Текст під ним зсувається разом із ним.",
-  "option.mnightmares.reset_phantom_timer.tooltip": "Коли ніч пропущено, фантоми перестають приходити й до тих, хто не спав."
+  "option.mnightmares.reset_phantom_timer.tooltip": "Коли ніч пропущено, фантоми перестають приходити й до тих, хто не спав.",
+  "option.mnightmares.suppress_vanilla_messages.tooltip": "Приховує вбудовані повідомлення «гравці сплять» і «ніч пропускається»."
 }

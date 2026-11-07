@@ -105,7 +105,8 @@ public final class NightmaresConfig {
                 sleepOverlay.hideChatWhenSleeping,
                 sleepOverlay.eyeAnimationSpeedMs,
                 sleepOverlay.textScale,
-                sleepOverlay.imageScale
+                sleepOverlay.imageScale,
+                sleepOverlay.hideHudMessagesWhenSleeping
         );
     }
 
@@ -149,6 +150,11 @@ public final class NightmaresConfig {
         return sleepOverlay.hideChatWhenSleeping;
     }
 
+    public boolean isHideHudMessagesWhenSleeping() {
+        if (ServerConfigCache.has()) return ServerConfigCache.get().hideHudMessagesWhenSleeping();
+        return sleepOverlay.hideHudMessagesWhenSleeping;
+    }
+
     public int getEyeAnimationSpeedMs() {
         if (ServerConfigCache.has()) return ServerConfigCache.get().eyeAnimationSpeedMs();
         return sleepOverlay.eyeAnimationSpeedMs;
@@ -183,12 +189,14 @@ public final class NightmaresConfig {
         public boolean userContentReplaces = false;
         public boolean hideChatWhenSleeping = true;
         public int eyeAnimationSpeedMs = 100;
+        public boolean hideHudMessagesWhenSleeping = false;
         public float textScale = DEFAULT_SCALE;
         public float imageScale = DEFAULT_SCALE;
     }
 
     public static class ServerSettings {
         public boolean resetPhantomTimerForNonSleepers = true;
+        public boolean suppressVanillaSleepMessages = false;
     }
 
     public static void reload() {

@@ -314,6 +314,10 @@ public class SleepOverlayRenderer {
         return sleepStateManager.isSleeping() && isOverlayVisible;
     }
 
+    public boolean shouldHideHudMessages() {
+        return config.isHideHudMessagesWhenSleeping() && sleepStateManager.isSleeping() && isOverlayVisible;
+    }
+
     public boolean shouldHideChat() {
         return config.isHideChatWhenSleeping() && sleepStateManager.isSleeping() && isOverlayVisible;
     }

@@ -76,8 +76,9 @@ public class ConfigSectionScreen extends OptionsSubScreen {
         options.addSmall(
                 flag("enable_image", o.enableImage, value -> o.enableImage = value),
                 flag("hide_chat_when_sleeping", o.hideChatWhenSleeping, value -> o.hideChatWhenSleeping = value));
-        options.addBig(
-                flag("user_content_replaces", o.userContentReplaces, value -> o.userContentReplaces = value));
+        options.addSmall(
+                flag("user_content_replaces", o.userContentReplaces, value -> o.userContentReplaces = value),
+                flag("hide_hud_messages", o.hideHudMessagesWhenSleeping, value -> o.hideHudMessagesWhenSleeping = value));
         options.addSmall(
                 seconds("min_slide_time", o.minSlideDisplayTimeMs, value -> o.minSlideDisplayTimeMs = value),
                 seconds("max_slide_time", o.maxSlideDisplayTimeMs, value -> o.maxSlideDisplayTimeMs = value));
@@ -101,6 +102,8 @@ public class ConfigSectionScreen extends OptionsSubScreen {
     private static void addServer(OptionsList options, NightmaresConfig.ServerSettings server) {
         options.addBig(flag("reset_phantom_timer", server.resetPhantomTimerForNonSleepers,
                 value -> server.resetPhantomTimerForNonSleepers = value));
+        options.addBig(flag("suppress_vanilla_messages", server.suppressVanillaSleepMessages,
+                value -> server.suppressVanillaSleepMessages = value));
     }
 
     private static int scalePercent(float scale) {
