@@ -5,6 +5,7 @@ import mnightmares.network.NetworkHandler;
 import mnightmares.config.NightmaresConfig;
 import mnightmares.server.UserContentInitializer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,11 +26,14 @@ public class MidnightNightmares {
 
     private final IEventBus modEventBus;
 
-    public MidnightNightmares() {
-        this.modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public MidnightNightmares(FMLJavaModLoadingContext context) {
+        this.modEventBus = context.getModEventBus();
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::onClientSetup);
         MinecraftForge.EVENT_BUS.register(this);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            mnightmares.client.MidnightNightmaresClient.registerConfigScreen(context);
+        }
         LOGGER.info("Midnight Nightmares initialized");
     }
 

@@ -7,17 +7,20 @@ import mnightmares.client.render.SleepOverlayRenderer;
 import mnightmares.client.repository.SlideRepository;
 import mnightmares.client.service.SlideService;
 import mnightmares.client.service.UserContentLoader;
+import mnightmares.client.ui.config.NightmaresConfigScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +42,12 @@ public class MidnightNightmaresClient {
             modEventBus.addListener(MidnightNightmaresClient::onRegisterReloadListeners);
             LOGGER.info("[MidnightNightmaresClient] initialized");
         }
+    }
+
+    public static void registerConfigScreen(FMLJavaModLoadingContext context) {
+        context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new ConfigScreenHandler.ConfigScreenFactory(
+                        (minecraft, parent) -> new NightmaresConfigScreen(parent)));
     }
 
     private MidnightNightmaresClient() {

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SleepOverlayRenderer {
-    private static final ResourceLocation EYE_TEXTURE = new ResourceLocation(MidnightNightmares.MOD_ID, "textures/gui/eye.png");
+    private static final ResourceLocation EYE_TEXTURE = ResourceLocation.fromNamespaceAndPath(MidnightNightmares.MOD_ID, "textures/gui/eye.png");
     private static final int EYE_FRAME_SIZE = 32;
     private static final int EYE_FRAME_COUNT = 22;
     private static final int EYE_TEXTURE_HEIGHT = EYE_FRAME_SIZE * EYE_FRAME_COUNT;
@@ -201,10 +201,10 @@ public class SleepOverlayRenderer {
 
         float uiScale = Math.min(screenWidth / BASE_W, screenHeight / BASE_H);
 
-        int eyeSize = Math.max(1, Math.round(VIRTUAL_EYE_SIZE * uiScale));
+        int eyeSize = Math.max(1, Math.round(VIRTUAL_EYE_SIZE * uiScale * config.getImageScale()));
         int gap = Math.round(VIRTUAL_GAP * uiScale);
         int textAreaWidth = Math.round(VIRTUAL_TEXT_WIDTH * uiScale);
-        float textScale = Math.max(1.0f, VIRTUAL_TEXT_SCALE * uiScale);
+        float textScale = Math.max(1.0f, VIRTUAL_TEXT_SCALE * uiScale) * config.getTextScale();
 
         List<String> lines = currentSlide != null
                 ? wrapText(currentSlide.text(), font, Math.round(textAreaWidth / textScale))
@@ -274,17 +274,40 @@ public class SleepOverlayRenderer {
             if (font.width(testLine) <= maxWidth) {
                 if (!currentLine.isEmpty()) currentLine.append(" ");
                 currentLine.append(word);
+                continue;
+            }
+            if (!currentLine.isEmpty()) {
+                lines.add(currentLine.toString());
+                currentLine = new StringBuilder();
+            }
+            if (font.width(word) <= maxWidth) {
+                currentLine.append(word);
             } else {
-                if (!currentLine.isEmpty()) {
-                    lines.add(currentLine.toString());
-                    currentLine = new StringBuilder(word);
-                } else {
-                    lines.add(word);
-                }
+                List<String> pieces = splitByWidth(word, font, maxWidth);
+                lines.addAll(pieces.subList(0, pieces.size() - 1));
+                currentLine.append(pieces.get(pieces.size() - 1));
             }
         }
         if (!currentLine.isEmpty()) lines.add(currentLine.toString());
         return lines;
+    }
+
+    private static List<String> splitByWidth(String word, Font font, int maxWidth) {
+        List<String> pieces = new ArrayList<>();
+        StringBuilder piece = new StringBuilder();
+        int index = 0;
+        while (index < word.length()) {
+            int codePoint = word.codePointAt(index);
+            String next = new String(Character.toChars(codePoint));
+            if (!piece.isEmpty() && font.width(piece + next) > maxWidth) {
+                pieces.add(piece.toString());
+                piece = new StringBuilder();
+            }
+            piece.append(next);
+            index += Character.charCount(codePoint);
+        }
+        pieces.add(piece.toString());
+        return pieces;
     }
 
     public boolean shouldHideCrosshair() {

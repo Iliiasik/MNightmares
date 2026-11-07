@@ -3,6 +3,8 @@ package mnightmares.client.service;
 import mnightmares.config.NightmaresConfig;
 import mnightmares.client.model.Slide;
 import mnightmares.client.repository.SlideRepository;
+import mnightmares.common.SupportedLanguages;
+import net.minecraft.client.Minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ public class SlideService {
         if (config.isUserContentReplaces() && !userEntries.isEmpty()) {
             for (String text : userEntries) pool.add(Slide.of(text));
         } else {
-            pool.addAll(slideRepository.getSlides());
+            pool.addAll(slideRepository.getSlides(language));
             for (String text : userEntries) pool.add(Slide.of(text));
         }
 
@@ -48,7 +50,7 @@ public class SlideService {
         return pool.get(pool.size() - 1);
     }
 
-    public String getCurrentLanguage() {
-        return "en_us";
+    private static String getCurrentLanguage() {
+        return SupportedLanguages.fromLocale(Minecraft.getInstance().getLanguageManager().getSelected());
     }
 }

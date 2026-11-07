@@ -5,7 +5,7 @@ import net.minecraft.network.FriendlyByteBuf;
 public record SyncConfigPacket(int minSlideDisplayTimeMs, int maxSlideDisplayTimeMs, int fadeInDurationMs,
                                int fadeOutDurationMs, float overlayOpacity, float textOpacity, float imageOpacity,
                                boolean enableImage, boolean userContentReplaces, boolean hideChatWhenSleeping,
-                               int eyeAnimationSpeedMs) {
+                               int eyeAnimationSpeedMs, float textScale, float imageScale) {
     public static void encode(SyncConfigPacket packet, FriendlyByteBuf buf) {
         buf.writeInt(packet.minSlideDisplayTimeMs);
         buf.writeInt(packet.maxSlideDisplayTimeMs);
@@ -18,6 +18,8 @@ public record SyncConfigPacket(int minSlideDisplayTimeMs, int maxSlideDisplayTim
         buf.writeBoolean(packet.userContentReplaces);
         buf.writeBoolean(packet.hideChatWhenSleeping);
         buf.writeInt(packet.eyeAnimationSpeedMs);
+        buf.writeFloat(packet.textScale);
+        buf.writeFloat(packet.imageScale);
     }
 
     public static SyncConfigPacket decode(FriendlyByteBuf buf) {
@@ -25,7 +27,8 @@ public record SyncConfigPacket(int minSlideDisplayTimeMs, int maxSlideDisplayTim
                 buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(),
                 buf.readFloat(), buf.readFloat(), buf.readFloat(),
                 buf.readBoolean(), buf.readBoolean(), buf.readBoolean(),
-                buf.readInt()
+                buf.readInt(),
+                buf.readFloat(), buf.readFloat()
         );
     }
 }
