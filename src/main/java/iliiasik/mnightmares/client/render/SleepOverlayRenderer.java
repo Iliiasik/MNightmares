@@ -146,7 +146,7 @@ public class SleepOverlayRenderer {
     }
 
     private float easeInOut(float t) {
-        t = Math.max(0f, Math.min(1f, t));
+        t = Math.clamp(t, 0f, 1f);
         return t < 0.5f ? 2 * t * t : 1 - (float) Math.pow(-2 * t + 2, 2) / 2;
     }
 
@@ -199,10 +199,10 @@ public class SleepOverlayRenderer {
 
         float uiScale = Math.min(screenWidth / BASE_W, screenHeight / BASE_H);
 
-        int eyeSize = Math.max(1, Math.round(VIRTUAL_EYE_SIZE * uiScale));
+        int eyeSize = Math.max(1, Math.round(VIRTUAL_EYE_SIZE * uiScale * config.getImageScale()));
         int gap = Math.round(VIRTUAL_GAP * uiScale);
         int textAreaWidth = Math.round(VIRTUAL_TEXT_WIDTH * uiScale);
-        float textScale = Math.max(1.0f, VIRTUAL_TEXT_SCALE * uiScale);
+        float textScale = Math.max(1.0f, VIRTUAL_TEXT_SCALE * uiScale) * config.getTextScale();
 
         List<String> lines = currentSlide != null
                 ? wrapText(currentSlide.text(), font, Math.round(textAreaWidth / textScale))
@@ -272,21 +272,48 @@ public class SleepOverlayRenderer {
             if (font.width(testLine) <= maxWidth) {
                 if (!currentLine.isEmpty()) currentLine.append(" ");
                 currentLine.append(word);
+                continue;
+            }
+            if (!currentLine.isEmpty()) {
+                lines.add(currentLine.toString());
+                currentLine = new StringBuilder();
+            }
+            if (font.width(word) <= maxWidth) {
+                currentLine.append(word);
             } else {
-                if (!currentLine.isEmpty()) {
-                    lines.add(currentLine.toString());
-                    currentLine = new StringBuilder(word);
-                } else {
-                    lines.add(word);
-                }
+                List<String> pieces = splitByWidth(word, font, maxWidth);
+                lines.addAll(pieces.subList(0, pieces.size() - 1));
+                currentLine.append(pieces.getLast());
             }
         }
         if (!currentLine.isEmpty()) lines.add(currentLine.toString());
         return lines;
     }
 
+    private static List<String> splitByWidth(String word, Font font, int maxWidth) {
+        List<String> pieces = new ArrayList<>();
+        StringBuilder piece = new StringBuilder();
+        int index = 0;
+        while (index < word.length()) {
+            int codePoint = word.codePointAt(index);
+            String next = new String(Character.toChars(codePoint));
+            if (!piece.isEmpty() && font.width(piece + next) > maxWidth) {
+                pieces.add(piece.toString());
+                piece = new StringBuilder();
+            }
+            piece.append(next);
+            index += Character.charCount(codePoint);
+        }
+        pieces.add(piece.toString());
+        return pieces;
+    }
+
     public boolean shouldHideCrosshair() {
         return sleepStateManager.isSleeping() && isOverlayVisible;
+    }
+
+    public boolean shouldHideHudMessages() {
+        return config.isHideHudMessagesWhenSleeping() && sleepStateManager.isSleeping() && isOverlayVisible;
     }
 
     public boolean shouldHideChat() {

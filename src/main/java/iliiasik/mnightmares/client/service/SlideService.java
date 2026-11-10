@@ -3,6 +3,8 @@ package iliiasik.mnightmares.client.service;
 import iliiasik.mnightmares.config.NightmaresConfig;
 import iliiasik.mnightmares.client.model.Slide;
 import iliiasik.mnightmares.client.repository.SlideRepository;
+import iliiasik.mnightmares.common.SupportedLanguages;
+import net.minecraft.client.Minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ public class SlideService {
         if (config.isUserContentReplaces() && !userEntries.isEmpty()) {
             for (String text : userEntries) pool.add(Slide.of(text));
         } else {
-            pool.addAll(slideRepository.getSlides());
+            pool.addAll(slideRepository.getSlides(language));
             for (String text : userEntries) pool.add(Slide.of(text));
         }
 
@@ -48,7 +50,7 @@ public class SlideService {
         return pool.getLast();
     }
 
-    public String getCurrentLanguage() {
-        return "en_us";
+    private static String getCurrentLanguage() {
+        return SupportedLanguages.fromLocale(Minecraft.getInstance().getLanguageManager().getSelected());
     }
 }

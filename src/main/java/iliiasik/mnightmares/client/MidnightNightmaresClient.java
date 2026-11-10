@@ -8,15 +8,18 @@ import iliiasik.mnightmares.client.render.SleepOverlayRenderer;
 import iliiasik.mnightmares.client.repository.SlideRepository;
 import iliiasik.mnightmares.client.service.SlideService;
 import iliiasik.mnightmares.client.service.UserContentLoader;
+import iliiasik.mnightmares.client.ui.config.NightmaresConfigScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -38,6 +41,11 @@ public class MidnightNightmaresClient {
             modEventBus.addListener(MidnightNightmaresClient::onRegisterReloadListeners);
             LOGGER.info("[MidnightNightmaresClient] initialized");
         }
+    }
+
+    public static void registerConfigScreen(ModContainer modContainer) {
+        modContainer.registerExtensionPoint(IConfigScreenFactory.class,
+                (container, parent) -> new NightmaresConfigScreen(parent));
     }
 
     private MidnightNightmaresClient() {

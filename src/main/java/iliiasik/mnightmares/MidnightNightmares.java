@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -27,12 +28,13 @@ public class MidnightNightmares {
     public static final String MOD_ID = "mnightmares";
     public static final Logger LOGGER = LoggerFactory.getLogger("MidnightNightmares");
 
-    public MidnightNightmares(IEventBus modEventBus) {
+    public MidnightNightmares(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::registerPayloads);
         NeoForge.EVENT_BUS.register(this);
         if (FMLEnvironment.dist == Dist.CLIENT) {
             iliiasik.mnightmares.client.MidnightNightmaresClient.init(modEventBus);
+            iliiasik.mnightmares.client.MidnightNightmaresClient.registerConfigScreen(modContainer);
         }
         LOGGER.info("Midnight Nightmares initialized");
     }
@@ -43,7 +45,7 @@ public class MidnightNightmares {
     }
 
     private void registerPayloads(final RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar("1").optional();
+        PayloadRegistrar registrar = event.registrar("2").optional();
         registrar.playToClient(SyncConfigPayload.TYPE, SyncConfigPayload.STREAM_CODEC, NightmaresPayloads::handleConfig);
         registrar.playToClient(UserContentPayload.TYPE, UserContentPayload.STREAM_CODEC, NightmaresPayloads::handleContent);
     }

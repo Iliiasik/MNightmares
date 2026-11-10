@@ -15,6 +15,9 @@ import java.nio.file.Paths;
 public final class NightmaresConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger("MidnightNightmares");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    public static final float MIN_SCALE = 0.5f;
+    public static final float MAX_SCALE = 1.5f;
+    private static final float DEFAULT_SCALE = 1.0f;
     private static NightmaresConfig instance;
 
     private SleepOverlaySettings sleepOverlay = new SleepOverlaySettings();
@@ -35,6 +38,7 @@ public final class NightmaresConfig {
                 NightmaresConfig config = GSON.fromJson(json, NightmaresConfig.class);
                 if (config != null) {
                     config.validate();
+                    config.save();
                     return config;
                 }
             } catch (IOException e) {
@@ -59,6 +63,20 @@ public final class NightmaresConfig {
     private void validate() {
         if (sleepOverlay == null) sleepOverlay = new SleepOverlaySettings();
         if (server == null) server = new ServerSettings();
+        sleepOverlay.textScale = clampScale(sleepOverlay.textScale, "textScale");
+        sleepOverlay.imageScale = clampScale(sleepOverlay.imageScale, "imageScale");
+    }
+
+    private static float clampScale(float value, String field) {
+        if (!Float.isFinite(value)) {
+            LOGGER.warn("Config value sleepOverlay.{} was not a valid number, reset to {}", field, DEFAULT_SCALE);
+            return DEFAULT_SCALE;
+        }
+        float clamped = Math.clamp(value, MIN_SCALE, MAX_SCALE);
+        if (clamped != value) {
+            LOGGER.warn("Config value sleepOverlay.{} was {}, clamped to {}", field, value, clamped);
+        }
+        return clamped;
     }
 
     public static Path getConfigDir() {
@@ -70,6 +88,8 @@ public final class NightmaresConfig {
     }
 
     public ServerSettings getServer() { return server; }
+
+    public SleepOverlaySettings getSleepOverlay() { return sleepOverlay; }
 
     public SyncConfigPayload toSyncPayload() {
         return new SyncConfigPayload(
@@ -83,7 +103,10 @@ public final class NightmaresConfig {
                 sleepOverlay.enableImage,
                 sleepOverlay.userContentReplaces,
                 sleepOverlay.hideChatWhenSleeping,
-                sleepOverlay.eyeAnimationSpeedMs
+                sleepOverlay.eyeAnimationSpeedMs,
+                sleepOverlay.textScale,
+                sleepOverlay.imageScale,
+                sleepOverlay.hideHudMessagesWhenSleeping
         );
     }
 
@@ -127,6 +150,21 @@ public final class NightmaresConfig {
         return sleepOverlay.hideChatWhenSleeping;
     }
 
+    public boolean isHideHudMessagesWhenSleeping() {
+        if (ServerConfigCache.has()) return ServerConfigCache.get().hideHudMessagesWhenSleeping();
+        return sleepOverlay.hideHudMessagesWhenSleeping;
+    }
+
+    public float getTextScale() {
+        if (ServerConfigCache.has()) return ServerConfigCache.get().textScale();
+        return sleepOverlay.textScale;
+    }
+
+    public float getImageScale() {
+        if (ServerConfigCache.has()) return ServerConfigCache.get().imageScale();
+        return sleepOverlay.imageScale;
+    }
+
     public int getEyeAnimationSpeedMs() {
         if (ServerConfigCache.has()) return ServerConfigCache.get().eyeAnimationSpeedMs();
         return sleepOverlay.eyeAnimationSpeedMs;
@@ -151,10 +189,14 @@ public final class NightmaresConfig {
         public boolean userContentReplaces = false;
         public boolean hideChatWhenSleeping = true;
         public int eyeAnimationSpeedMs = 100;
+        public boolean hideHudMessagesWhenSleeping = false;
+        public float textScale = DEFAULT_SCALE;
+        public float imageScale = DEFAULT_SCALE;
     }
 
     public static class ServerSettings {
         public boolean resetPhantomTimerForNonSleepers = true;
+        public boolean suppressVanillaSleepMessages = false;
     }
 
     public static void reload() {

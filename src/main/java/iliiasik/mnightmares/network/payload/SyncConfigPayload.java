@@ -5,11 +5,13 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public record SyncConfigPayload(int minSlideDisplayTimeMs, int maxSlideDisplayTimeMs, int fadeInDurationMs,
                                 int fadeOutDurationMs, float overlayOpacity, float textOpacity, float imageOpacity,
                                 boolean enableImage, boolean userContentReplaces, boolean hideChatWhenSleeping,
-                                int eyeAnimationSpeedMs) implements CustomPacketPayload {
+                                int eyeAnimationSpeedMs, float textScale, float imageScale,
+                                boolean hideHudMessagesWhenSleeping) implements CustomPacketPayload {
 
     public static final Type<SyncConfigPayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(MidnightNightmares.MOD_ID, "sync_config"));
@@ -29,6 +31,9 @@ public record SyncConfigPayload(int minSlideDisplayTimeMs, int maxSlideDisplayTi
         buf.writeBoolean(p.userContentReplaces);
         buf.writeBoolean(p.hideChatWhenSleeping);
         buf.writeInt(p.eyeAnimationSpeedMs);
+        buf.writeFloat(p.textScale);
+        buf.writeFloat(p.imageScale);
+        buf.writeBoolean(p.hideHudMessagesWhenSleeping);
     }
 
     private static SyncConfigPayload read(RegistryFriendlyByteBuf buf) {
@@ -36,11 +41,13 @@ public record SyncConfigPayload(int minSlideDisplayTimeMs, int maxSlideDisplayTi
                 buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(),
                 buf.readFloat(), buf.readFloat(), buf.readFloat(),
                 buf.readBoolean(), buf.readBoolean(), buf.readBoolean(),
-                buf.readInt());
+                buf.readInt(),
+                buf.readFloat(), buf.readFloat(),
+                buf.readBoolean());
     }
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public @NotNull Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 }
