@@ -20,7 +20,7 @@
   "option.mnightmares.eye_animation_speed": "Bildzeit des Auges",
   "option.mnightmares.text_scale": "Textgröße",
   "option.mnightmares.image_scale": "Augengröße",
-  "option.mnightmares.reset_phantom_timer": "Phantom-Zeit auch für Wachgebliebene zurücksetzen",
+  "option.mnightmares.reset_phantom_timer": "Phantom-Timer auch für Wache zurücksetzen",
   "option.mnightmares.suppress_vanilla_messages": "Vanilla-Schlafmeldungen ausblenden",
   "option.mnightmares.enable_image.tooltip": "Zeigt das beobachtende Auge über dem Text.",
   "option.mnightmares.hide_chat_when_sleeping.tooltip": "Blendet das Chatfenster aus, solange das Overlay zu sehen ist.",

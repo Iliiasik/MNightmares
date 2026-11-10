@@ -76,30 +76,22 @@ public class ConfigSectionScreen extends OptionsSubScreen {
     }
 
     private static void addSleepOverlay(OptionsList options, NightmaresConfig.SleepOverlaySettings o) {
-        options.addSmall(
-                flag("enable_image", o.enableImage, value -> o.enableImage = value),
-                flag("hide_chat_when_sleeping", o.hideChatWhenSleeping, value -> o.hideChatWhenSleeping = value));
-        options.addSmall(
-                flag("user_content_replaces", o.userContentReplaces, value -> o.userContentReplaces = value),
-                flag("hide_hud_messages", o.hideHudMessagesWhenSleeping, value -> o.hideHudMessagesWhenSleeping = value));
-        options.addSmall(
-                seconds("min_slide_time", o.minSlideDisplayTimeMs, value -> o.minSlideDisplayTimeMs = value),
-                seconds("max_slide_time", o.maxSlideDisplayTimeMs, value -> o.maxSlideDisplayTimeMs = value));
-        options.addSmall(
-                millis("fade_in", 0, 3000, o.fadeInDurationMs, value -> o.fadeInDurationMs = value),
-                millis("fade_out", 0, 3000, o.fadeOutDurationMs, value -> o.fadeOutDurationMs = value));
-        options.addSmall(
-                percent("overlay_opacity", 0, 100, o.overlayOpacity, value -> o.overlayOpacity = value),
-                percent("text_opacity", 0, 100, o.textOpacity, value -> o.textOpacity = value));
-        options.addSmall(
-                percent("image_opacity", 0, 100, o.imageOpacity, value -> o.imageOpacity = value),
-                millis("eye_animation_speed", 20, 500, o.eyeAnimationSpeedMs,
-                        value -> o.eyeAnimationSpeedMs = value));
-        options.addSmall(
-                percent("text_scale", scalePercent(NightmaresConfig.MIN_SCALE), scalePercent(NightmaresConfig.MAX_SCALE),
-                        o.textScale, value -> o.textScale = value),
-                percent("image_scale", scalePercent(NightmaresConfig.MIN_SCALE), scalePercent(NightmaresConfig.MAX_SCALE),
-                        o.imageScale, value -> o.imageScale = value));
+        options.addBig(flag("enable_image", o.enableImage, value -> o.enableImage = value));
+        options.addBig(flag("hide_chat_when_sleeping", o.hideChatWhenSleeping, value -> o.hideChatWhenSleeping = value));
+        options.addBig(flag("user_content_replaces", o.userContentReplaces, value -> o.userContentReplaces = value));
+        options.addBig(flag("hide_hud_messages", o.hideHudMessagesWhenSleeping, value -> o.hideHudMessagesWhenSleeping = value));
+        options.addBig(seconds("min_slide_time", o.minSlideDisplayTimeMs, value -> o.minSlideDisplayTimeMs = value));
+        options.addBig(seconds("max_slide_time", o.maxSlideDisplayTimeMs, value -> o.maxSlideDisplayTimeMs = value));
+        options.addBig(millis("fade_in", 0, 3000, o.fadeInDurationMs, value -> o.fadeInDurationMs = value));
+        options.addBig(millis("fade_out", 0, 3000, o.fadeOutDurationMs, value -> o.fadeOutDurationMs = value));
+        options.addBig(percent("overlay_opacity", 0, 100, o.overlayOpacity, value -> o.overlayOpacity = value));
+        options.addBig(percent("text_opacity", 0, 100, o.textOpacity, value -> o.textOpacity = value));
+        options.addBig(percent("image_opacity", 0, 100, o.imageOpacity, value -> o.imageOpacity = value));
+        options.addBig(millis("eye_animation_speed", 20, 500, o.eyeAnimationSpeedMs, value -> o.eyeAnimationSpeedMs = value));
+        options.addBig(percent("text_scale", scalePercent(NightmaresConfig.MIN_SCALE), scalePercent(NightmaresConfig.MAX_SCALE),
+                o.textScale, value -> o.textScale = value));
+        options.addBig(percent("image_scale", scalePercent(NightmaresConfig.MIN_SCALE), scalePercent(NightmaresConfig.MAX_SCALE),
+                o.imageScale, value -> o.imageScale = value));
     }
 
     private static void addServer(OptionsList options, NightmaresConfig.ServerSettings server) {

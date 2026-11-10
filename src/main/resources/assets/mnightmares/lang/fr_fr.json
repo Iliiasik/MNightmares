@@ -20,7 +20,7 @@
   "option.mnightmares.eye_animation_speed": "Durée d'une image de l'œil",
   "option.mnightmares.text_scale": "Taille du texte",
   "option.mnightmares.image_scale": "Taille de l'œil",
-  "option.mnightmares.reset_phantom_timer": "Réinitialiser le compteur de fantômes pour les non-dormeurs",
+  "option.mnightmares.reset_phantom_timer": "Réinitialiser le minuteur fantômes des éveillés",
   "option.mnightmares.suppress_vanilla_messages": "Masquer les messages de sommeil d'origine",
   "option.mnightmares.enable_image.tooltip": "Affiche l'œil qui observe au-dessus du texte.",
   "option.mnightmares.hide_chat_when_sleeping.tooltip": "Masque la fenêtre de chat pendant l'affichage de la surimpression.",

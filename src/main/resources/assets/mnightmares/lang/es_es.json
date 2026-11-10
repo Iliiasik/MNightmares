@@ -20,7 +20,7 @@
   "option.mnightmares.eye_animation_speed": "Tiempo por fotograma del ojo",
   "option.mnightmares.text_scale": "Tamaño del texto",
   "option.mnightmares.image_scale": "Tamaño del ojo",
-  "option.mnightmares.reset_phantom_timer": "Reiniciar el temporizador de fantasmas a quien no durmió",
+  "option.mnightmares.reset_phantom_timer": "Reiniciar contador de fantasmas de los despiertos",
   "option.mnightmares.suppress_vanilla_messages": "Ocultar los mensajes de sueño originales",
   "option.mnightmares.enable_image.tooltip": "Muestra el ojo que vigila sobre el texto.",
   "option.mnightmares.hide_chat_when_sleeping.tooltip": "Oculta la ventana de chat mientras se muestra la superposición.",
