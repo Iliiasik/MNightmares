@@ -5,7 +5,9 @@ import mnightmares.cache.ServerConfigCache;
 import mnightmares.client.MidnightNightmaresClient;
 import mnightmares.network.packet.SyncConfigPacket;
 import mnightmares.network.packet.UserContentPacket;
+import mnightmares.config.NightmaresConfig;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -19,10 +21,10 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public class NetworkHandler {
-    private static final String PROTOCOL_VERSION = "1";
+    private static final String PROTOCOL_VERSION = "2";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(MidnightNightmares.MOD_ID, "main"),
+            ResourceLocation.fromNamespaceAndPath(MidnightNightmares.MOD_ID, "main"),
             () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals
@@ -43,6 +45,13 @@ public class NetworkHandler {
 
     public static void sendConfig(ServerPlayer player, SyncConfigPacket packet) {
         CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+    }
+
+    public static void sendConfigToAll(MinecraftServer server) {
+        SyncConfigPacket packet = NightmaresConfig.getInstance().toSyncPacket();
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            sendConfig(player, packet);
+        }
     }
 
     public static void sendUserContent(ServerPlayer player, UserContentPacket packet) {

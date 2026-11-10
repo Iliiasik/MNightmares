@@ -1,5 +1,6 @@
 package mnightmares.server;
 
+import mnightmares.common.SupportedLanguages;
 import mnightmares.config.NightmaresConfig;
 import mnightmares.network.packet.UserContentPacket;
 import org.slf4j.Logger;
@@ -15,11 +16,10 @@ import java.util.Map;
 
 public class UserContentInitializer {
     private static final Logger LOGGER = LoggerFactory.getLogger("MidnightNightmares");
-    private static final String[] ALL_LANGUAGES = {"en_us"};
     private static final String EMPTY_CONTENT = "{\n  \"entries\": []\n}\n";
 
     public static void writeDefaultFiles() {
-        for (String language : ALL_LANGUAGES) {
+        for (String language : SupportedLanguages.codes()) {
             Path dir = getNightmaresDir().resolve(language);
             try {
                 Files.createDirectories(dir);
@@ -41,7 +41,7 @@ public class UserContentInitializer {
 
     public static UserContentPacket buildPacket() {
         Map<String, List<String>> content = new HashMap<>();
-        for (String language : ALL_LANGUAGES) {
+        for (String language : SupportedLanguages.codes()) {
             String key = language + ":nightmares";
             List<String> entries = readEntries(language);
             if (!entries.isEmpty()) {
